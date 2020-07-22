@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Enregistrer{% endblock %}
+
+{% block body %}
+    <style>
+        fieldset
+        {
+            border: 1px solid #ddd !important;
+            margin-top: 20px;
+            xmin-width: 0;
+            padding: 10px;
+            position: relative;
+            border-radius:4px;
+            background-color:#f5f5f5;
+            padding-left:10px!important;
+            left: 232px;
+        }
+
+        legend
+        {
+            font-size:14px;
+            font-weight:bold;
+            margin-bottom: 0px;
+            width: 35%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px 5px 5px 10px;
+            background-color: #ffffff;
+        }
+        .form-group.required .control-label:after {
+            content:"*";
+            color:red;
+        }
+    </style>
+<div class="container">
+        <fieldset class="border col-md-6">
+            <legend class="col-md-3"> Login details</legend>
+    {{ form_start(formuser, {'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="form-group  required">
+                {{ form_label(formuser.username, "User name : ", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(formuser.username,{'attr':{'class':'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group required">
+                {{ form_label(formuser.password, "Password :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(formuser.password,{'attr':{'class':'form-control', 'type': 'password'}}) }}
+                </div>
+            </div>
+            <div class="form-group required">
+                {{ form_label(formuser.retypePassword, "Retype password :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(formuser.retypePassword,{'attr':{'class':'form-control', 'type': 'password'}}) }}
+                </div>
+            </div>
+        </fieldset>
+</div>
+<div class="container">
+    <fieldset class="border col-md-6">
+        <legend class="col-md-6"> Personal Information</legend>
+            <div class="content">
+                    <div class="form-group required">
+                        {{ form_label(formuser.nom, "First name :", {'label_attr': {'class': 'col-sm-6 control-label'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(formuser.nom,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        {{ form_label(formuser.prenom, "Laste name :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(formuser.prenom,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        {{ form_label(formuser.email, "Email adress :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(formuser.email,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group required">
+                        {{ form_label(formuser.adresse, "Adresse :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                        <div class="col-sm-9">
+                            {{ form_widget(formuser.adresse,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                    </div>
+                <div class="form-group required">
+                    {{ form_label(formuser.institution, "Institution :", {'label_attr': {'class': 'col-sm-6 control-label '}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(formuser.institution,{'attr':{'class':'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="IsValide" class="col-sm-6 control-label">Avaible as Reviewer : </label>
+                    <div class="col-sm-9">
+                        {{ form_widget(formuser.isValide) }}
+                    </div>
+                </div>
+            </div>
+
+    </fieldset>
+</div>
+
+<div class="container">
+    <fieldset class="border col-md-6">
+        <legend class="col-md-6"> Ereas of interest or Expertise</legend>
+    </fieldset>
+</div>
+<div class="container">
+    <div class="form-group">
+        <button class="btn btn-success" style="margin-left: 472px;margin-top: 18px;" type="submit" style="margin-top: 10px">Submit</button>
+    </div>
+</div>
+    {{ form_end(formuser) }}
+{% endblock %}
