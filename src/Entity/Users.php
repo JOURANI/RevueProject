@@ -212,9 +212,9 @@ class Users implements UserInterface, \Serializable
     {
         $roles = $this->roles;
         // give everyone ROLE_USER!
-        if (!in_array('ROLE_CHERCHEUR', $roles)) {
-            $roles[] = 'ROLE_CHERCHEUR';
-        }
+//        if (!in_array('ROLE_CHERCHEUR', $roles)) {
+//            $roles[] = 'ROLE_CHERCHEUR';
+//        }
         return $roles;
     }
 

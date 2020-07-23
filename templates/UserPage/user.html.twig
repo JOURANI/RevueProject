@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{%  endblock %}
+{% block body %}
+    <style>
+        .bgimg {
+            min-height: 100%;
+            background-position: center;
+            background-size: cover;
+        }
+
+        /* Centered text */
+        .centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #eaecec;
+            font-size: x-large;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="centered">
+                    <label class="badge-light" style="text-align: right" for="">Welcome To User Page</label>
+                </div>
+{#                <img src="{{ asset('Image/users.png') }}" class="bgimg" alt="">#}
+
+            </div>
+            <div class="col-md-6">
+                <img src="{{ asset('Image/users.png') }}" class="bgimg" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}
