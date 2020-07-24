@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <style>
+        .mt{
+            margin-top: 10px;
+        }
+    </style>
+    <div class="container mt">
+        <div class="title">
+            <h1 class="text-center mb-5">Creer Un Nouveau Article</h1>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 ">
+                {{ form_start(formArticle) }}
+                {{ form_widget(formArticle) }}
+                <button type="submit" class="btn btn-primary"> Enregistrer</button>
+                {{ form_end(formArticle) }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+

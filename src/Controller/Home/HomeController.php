@@ -27,6 +27,11 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('reviewer-index');
         }
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_AUTEUR') === TRUE) {
+            // user is logged in
+            return $this->redirectToRoute('article-index');
+        }
+
         return $this->render('HomePage/home.html.twig', [
 //            'controller_name' => 'Home',
         ]);
