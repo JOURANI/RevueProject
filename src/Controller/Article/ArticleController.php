@@ -3,7 +3,10 @@
 namespace App\Controller\Article;
 
 use App\Entity\Article;
+use App\Entity\GroupeAuteur;
+use App\Entity\Users;
 use App\Form\ArticleType;
+use App\Form\GroupeAuteurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,18 +37,19 @@ class ArticleController extends AbstractController
     public function newArticle(Request $request,EntityManagerInterface $manager):Response
     {
         $article =new Article();
-        $form=$this->createForm(ArticleType::class,$article);
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        $formArticle = $this->createForm(ArticleType::class,$article);
+        $formArticle->handleRequest($request);
+
+        if($formArticle->isSubmitted() && $formArticle->isValid() )
+        {
+            $article->setUser($this->getUser());
             $manager->persist($article);
             $manager->flush();
-            return new Response("record saved successfully");
         }
-
-
+//
         return $this->render('Article/new.html.twig',[
-            'formArticle' => $form->createView(),
-            'article'=> $article
+            'formArticle' => $formArticle->createView(),
+//            'article'=> $article
         ]);
     }
 

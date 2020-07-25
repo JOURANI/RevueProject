@@ -3,7 +3,10 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -47,6 +50,60 @@ class Article
      * @ORM\JoinColumn(nullable=false)
      */
     private $User;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="article")
+     * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id", nullable=true)
+     */
+    private $categorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Revue", inversedBy="article")
+     * @ORM\JoinColumn(name="revue_id", referencedColumnName="id", nullable=true)
+     */
+    private $revue;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=GroupeAuteur::class, inversedBy="articles")
+     */
+    private $auteurs;
+
+    public function __construct()
+    {
+        $this->auteurs = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * @param mixed $categorie
+     */
+    public function setCategorie($categorie): void
+    {
+        $this->categorie = $categorie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRevue()
+    {
+        return $this->revue;
+    }
+
+    /**
+     * @param mixed $revue
+     */
+    public function setRevue($revue): void
+    {
+        $this->revue = $revue;
+    }
 
     public function getId(): ?int
     {
@@ -118,9 +175,35 @@ class Article
         return $this->User;
     }
 
-    public function setUser(?Users $User): self
+    public function setUser(Users $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GroupeAuteur[]
+     */
+    public function getAuteurs(): Collection
+    {
+        return $this->auteurs;
+    }
+
+    public function addAuteur(GroupeAuteur $auteur): self
+    {
+        if (!$this->auteurs->contains($auteur)) {
+            $this->auteurs[] = $auteur;
+        }
+
+        return $this;
+    }
+
+    public function removeAuteur(GroupeAuteur $auteur): self
+    {
+        if ($this->auteurs->contains($auteur)) {
+            $this->auteurs->removeElement($auteur);
+        }
 
         return $this;
     }

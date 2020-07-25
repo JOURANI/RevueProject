@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Categorie;
+use App\Entity\GroupeAuteur;
+use App\Entity\Institution;
+use App\Entity\Revue;
 use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -22,13 +26,13 @@ class ArticleType extends AbstractType
             ->add('keyword',TextType::class)
             ->add('content',TextareaType::class)
             ->add('size',IntegerType::class)
-            ->add('User',EntityType::class,[
-                'class' => Users::class,
-
-                // uses the User.username property as the visible option string
-                'choice_label' => 'username'
-            ])
-        ;
+            ->add('categorie',EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nomCategorie'])
+            ->add('revue',EntityType::class, [
+                'class' => Revue::class,
+                'choice_label' => 'nomRevue'])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

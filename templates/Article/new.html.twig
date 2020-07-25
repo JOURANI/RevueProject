@@ -14,14 +14,37 @@
         </div>
         <div class="row d-flex justify-content-center">
             <div class="col-6 ">
-                {{ form_start(formArticle) }}
+                {{ form_start(formArticle, { 'attr': {'class': 'article'} }) }}
                 {{ form_widget(formArticle) }}
-                <button type="submit" class="btn btn-primary"> Enregistrer</button>
                 {{ form_end(formArticle) }}
+
+
+{#                {{ form_start(formAuteur, { 'attr': {'class': 'groupe_auteur'} }) }}#}
+{#                {{ form_widget(formAuteur) }}#}
+{#                {{ form_end(formAuteur) }}#}
+                  <button class="btn btn-primary" id="save"> Enregistrer</button>
             </div>
         </div>
 
     </div>
+
+    {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#save").click(function () {
+                    // $(".submit").submit();
+                     $(".article").submit();
+
+                    //it takes more than 2 seconds, display notice
+                    // setTimeout(function() {
+                    //     $(".groupe_auteur").submit();
+                    //
+                    // }, 2000);
+                });
+            });
+        </script>
+    {% endblock %}
 
 {% endblock %}
 

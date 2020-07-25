@@ -98,9 +98,31 @@ class Users implements UserInterface, \Serializable
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GroupeAuteur", mappedBy="user")
+     */
+    private $groupeAuteur;
+
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupeAuteur()
+    {
+        return $this->groupeAuteur;
+    }
+
+    /**
+     * @param mixed $groupeAuteur
+     */
+    public function setGroupeAuteur($groupeAuteur): void
+    {
+        $this->groupeAuteur = $groupeAuteur;
     }
 
     /**
