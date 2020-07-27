@@ -37,19 +37,26 @@ class ArticleController extends AbstractController
     public function newArticle(Request $request,EntityManagerInterface $manager):Response
     {
         $article =new Article();
+//        $GroupeAuteur = new  GroupeAuteur();
         $formArticle = $this->createForm(ArticleType::class,$article);
         $formArticle->handleRequest($request);
 
         if($formArticle->isSubmitted() && $formArticle->isValid() )
         {
             $article->setUser($this->getUser());
+//            $data = $formArticle->getData();
+//            dump($data);die;
+//            dump($data);die;
+//            $GroupeAuteur->setUser($this->getUser());
+
             $manager->persist($article);
             $manager->flush();
+            return $this->redirectToRoute("groupAuteur-new");
         }
 //
-        return $this->render('Article/new.html.twig',[
+        return $this->render('Article/addNew.html.twig',[
             'formArticle' => $formArticle->createView(),
-//            'article'=> $article
+            'article'=> $article
         ]);
     }
 

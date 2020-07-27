@@ -64,7 +64,8 @@ class Article
     private $revue;
 
     /**
-     * @ORM\ManyToMany(targetEntity=GroupeAuteur::class, inversedBy="articles")
+     * @ORM\ManyToMany(targetEntity=GroupeAuteur::class, inversedBy="articles", cascade={"persist", "remove"})
+     * @var $data
      */
     private $auteurs;
 
@@ -207,4 +208,6 @@ class Article
 
         return $this;
     }
+
+
 }

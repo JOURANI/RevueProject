@@ -3,7 +3,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categorie;
 use App\Entity\Institution;
+use App\Entity\Revue;
 use App\Entity\Users;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -91,6 +93,44 @@ class UsersFixtures extends Fixture
         $reviwer->setInstitution($institution->setNomIns("INPT"));
         $manager->persist($reviwer);
 
+        //**************************************
+
+        $category= new Categorie();
+        $category->setNomCategorie("Physique");
+        $manager->persist($category);
+
+        $category1= new Categorie();
+        $category1->setNomCategorie("Chimie");
+        $manager->persist($category1);
+
+        $category2= new Categorie();
+        $category2->setNomCategorie("Math");
+        $manager->persist($category2);
+
+        $category3= new Categorie();
+        $category3->setNomCategorie("SVT");
+        $manager->persist($category3);
+
+        $category4= new Categorie();
+        $category4->setNomCategorie("Sociologie");
+        $manager->persist($category4);
+
+        //**************************************
+
+        $revue = new Revue();
+        $revue->setNomRevue("scopus");
+        $revue->setTypeRevue("scopus");
+        $manager->persist($revue);
+
+        $revue1 = new Revue();
+        $revue1->setNomRevue("Cedefop");
+        $revue1->setTypeRevue("Cedefop");
+        $manager->persist($revue1);
+
+        $revue2 = new Revue();
+        $revue2->setNomRevue("PubChem");
+        $revue2->setTypeRevue("PubChem");
+        $manager->persist($revue2);
 
         $manager->flush();
     }
