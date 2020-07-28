@@ -3,40 +3,41 @@
 {% block title %}Enregistrer{% endblock %}
 
 {% block body %}
-    <style>
-        /*fieldset*/
-        /*{*/
-        /*    border: 1px solid #ddd !important;*/
-        /*    margin-top: 20px;*/
-        /*    xmin-width: 0;*/
-        /*    padding: 10px;*/
-        /*    position: relative;*/
-        /*    border-radius:4px;*/
-        /*    background-color:#f5f5f5;*/
-        /*    padding-left:10px!important;*/
-        /*    left: 232px;*/
-        /*}*/
+{#    <style>#}
+{#        fieldset#}
+{#        {#}
+{#            border: 1px solid #ddd !important;#}
+{#            margin-top: 20px;#}
+{#            xmin-width: 0;#}
+{#            padding: 10px;#}
+{#            position: relative;#}
+{#            border-radius:4px;#}
+{#            background-color:#f5f5f5;#}
+{#            padding-left:10px!important;#}
+{#            left: 232px;#}
+{#        }#}
 
-        /*legend*/
-        /*{*/
-        /*    font-size:14px;*/
-        /*    font-weight:bold;*/
-        /*    margin-bottom: 0px;*/
-        /*    width: 35%;*/
-        /*    border: 1px solid #ddd;*/
-        /*    border-radius: 4px;*/
-        /*    padding: 5px 5px 5px 10px;*/
-        /*    background-color: #ffffff;*/
-        /*}*/
-        /*.form-group.required .control-label:after {*/
-        /*    content:"*";*/
-        /*    color:red;*/
-        /*}*/
-    </style>
+{#        legend#}
+{#        {#}
+{#            font-size:14px;#}
+{#            font-weight:bold;#}
+{#            margin-bottom: 0px;#}
+{#            width: 35%;#}
+{#            border: 1px solid #ddd;#}
+{#            border-radius: 4px;#}
+{#            padding: 5px 5px 5px 10px;#}
+{#            background-color: #ffffff;#}
+{#        }#}
+{#        .form-group.required .control-label:after {#}
+{#            content:"*";#}
+{#            color:red;#}
+{#        }#}
+{#    </style>#}
+    {{ form_start(formArticle, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="container">
         <fieldset class="border col-md-6">
             <legend class="col-md-3"> Article</legend>
-            {{ form_start(formArticle, {'attr': {'novalidate': 'novalidate'}}) }}
+
 
             <div class="form-group required">
                 {{ form_label(formArticle.categorie, "categorie :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
@@ -87,98 +88,96 @@
                 </div>
             </div>
         </fieldset>
+
         <div class="form-group required">
             <div class="col-sm-9">
                 <fieldset class="border col-md-6">
                     <legend class="col-md-3"> Auteur</legend>
                     {{ form_row(formArticle.auteurs) }}
-{#                    <a href="#" id="add_auteur" class="btn btn-primary">Ajouter un Auteur</a>#}
+                    <a href="#" id="add_auteur" class="btn btn-primary">Ajouter un Auteur</a>
                 </fieldset>
                 <p  style="margin-top: -50px;margin-right: 180px!important;float: right!important;">
                     <button type="submit" class="btn btn-primary float-right mr-5" id="articleStatus"> Enregistrer</button>
                 </p>
             </div>
         </div>
-        {{ form_end(formArticle) }}
+
     </div>
+    {{ form_end(formArticle) }}
     <p style="margin-bottom: 200px"></p>
-
-
-
-
-{#    {% block javascripts %}#}
-{#        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>#}
-
-{# Voici le script en question : #}
-{#<script type="text/javascript">#}
-{#    $(document).ready(function() {#}
-{#        // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.#}
-{#        var $container = $('div#article_auteurs');#}
-
-{#        // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement#}
-{#        var index = $container.find(':input').length;#}
-
-{#        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.#}
-{#        $('#add_auteur').click(function(e) {#}
-{#            addCategory($container);#}
-
-{#            e.preventDefault(); // évite qu'un # apparaisse dans l'URL#}
-{#            return false;#}
-{#        });#}
-
-{#        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).#}
-{#        if (index == 0) {#}
-{#            addCategory($container);#}
-{#        } else {#}
-{#            // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles#}
-{#            $container.children('div').each(function() {#}
-{#                addDeleteLink($(this));#}
-{#            });#}
-{#        }#}
-
-{#        // La fonction qui ajoute un formulaire GroupeAuteurType#}
-{#        function addCategory($container) {#}
-{#            // Dans le contenu de l'attribut « data-prototype », on remplace :#}
-{#            // - le texte "__name__label__" qu'il contient par le label du champ#}
-{#            // - le texte "__name__" qu'il contient par le numéro du champ#}
-{#            var template = $container.attr('data-prototype')#}
-{#                .replace(/__name__label__/g, 'Auteur' + (index+1))#}
-{#                .replace(/__name__/g,        index)#}
-{#            ;#}
-
-{#            // On crée un objet jquery qui contient ce template#}
-{#            var $prototype = $(template);#}
-
-{#            // On ajoute au prototype un lien pour pouvoir supprimer la catégorie#}
-{#            addDeleteLink($prototype);#}
-
-{#            // On ajoute le prototype modifié à la fin de la balise <div>#}
-{#            $container.append($prototype);#}
-
-{#            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro#}
-{#            index++;#}
-{#        }#}
-
-{#        // La fonction qui ajoute un lien de suppression d'une catégorie#}
-{#        function addDeleteLink($prototype) {#}
-{#            // Création du lien#}
-{#            var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');#}
-
-{#            // Ajout du lien#}
-{#            $prototype.append($deleteLink);#}
-
-{#            // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie#}
-{#            $deleteLink.click(function(e) {#}
-{#                $prototype.remove();#}
-
-{#                e.preventDefault(); // évite qu'un # apparaisse dans l'URL#}
-{#                return false;#}
-{#            });#}
-{#        }#}
-{#    });#}
-{#</script>#}
-{#    {% endblock %}#}
 
 {% endblock %}
 
+    {% block javascripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+        Voici le script en question :
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+                var $container = $('div#article_auteurs');
+
+                // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+                var index = $container.find(':input').length;
+
+                // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+                $('#add_auteur').click(function(e) {
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    e.stopPropagation();
+                    addCategory($container);
+                    return false;
+                });
+
+                // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+                if (index == 0) {
+                    addCategory($container);
+                } else {
+                    // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+                    $container.children('div').each(function() {
+                        addDeleteLink($(this));
+                    });
+                }
+
+                // La fonction qui ajoute un formulaire GroupeAuteurType
+                function addCategory($container) {
+                    // Dans le contenu de l'attribut « data-prototype », on remplace :
+                    // - le texte "__name__label__" qu'il contient par le label du champ
+                    // - le texte "__name__" qu'il contient par le numéro du champ
+                    var template = $container.attr('data-prototype')
+                        .replace(/__name__label__/g, 'Auteur' + (index+1))
+                        .replace(/__name__/g,        index)
+                    ;
+
+                    // On crée un objet jquery qui contient ce template
+                    var $prototype = $(template);
+
+                    // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                    addDeleteLink($prototype);
+
+                    // On ajoute le prototype modifié à la fin de la balise <div>
+                    $container.append($prototype);
+
+                    // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                    index++;
+                }
+
+                // La fonction qui ajoute un lien de suppression d'une catégorie
+                function addDeleteLink($prototype) {
+                    // Création du lien
+                    var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                    // Ajout du lien
+                    $prototype.append($deleteLink);
+
+                    // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+                    $deleteLink.click(function(e) {
+                        $prototype.remove();
+
+                        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                        return false;
+                    });
+                }
+            });
+        </script>
+    {% endblock %}
 

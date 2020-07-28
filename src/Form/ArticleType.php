@@ -4,17 +4,15 @@ namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\Categorie;
-use App\Entity\GroupeAuteur;
 use App\Entity\Revue;
-use App\Form\GroupeAuteurType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ArticleType extends AbstractType
@@ -36,20 +34,21 @@ class ArticleType extends AbstractType
                 'choice_label' => 'nomRevue'
             ])
 
-//            ->add('auteurs', CollectionType::class, [
-//                'entry_type' => GroupeAuteurType::class,
-//                'allow_add' => true,
-//                'allow_delete' => true
-//
-//            ])
-
-            ->add('auteurs', GroupeAuteurType::class, [
-                'data_class' => null,
-                'mapped' => true
-        ])
-
-//            ->add('Enregistrer',SubmitType::class);
+            ->add('auteurs', CollectionType::class, [
+                'entry_type' => GroupeAuteurType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'entry_options' => [ 'label' => false],
+                'by_reference' => false,
+                'label' => false
+            ])
         ;
+
+//        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+//            $event->getData()->addAuteur(new GroupeAuteur());
+//        });
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

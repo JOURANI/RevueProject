@@ -24,6 +24,7 @@ class GroupeAuteurType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => GroupeAuteur::class,
+//            'empty_data' => new GroupeAuteur()
         ]);
     }
 }

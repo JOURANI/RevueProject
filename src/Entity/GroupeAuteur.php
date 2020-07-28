@@ -45,7 +45,7 @@ class GroupeAuteur
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="auteurs")
+     * @ORM\ManyToMany(targetEntity=Article::class, mappedBy="auteurs", cascade={"remove"})
      */
     private $articles;
 
