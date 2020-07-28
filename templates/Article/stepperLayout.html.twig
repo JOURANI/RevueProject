@@ -1,0 +1,248 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <h2 id="heading">Sign Up Your User Account</h2>
+                <p>Fill all form field to go to next step</p>
+
+                {{ form_start(formArticle, {'attr': {'novalidate': 'novalidate','id': 'msform'}}) }}
+
+{#                <form id="msform">#}
+                    <!-- progressbar -->
+                    <ul id="progressbar">
+                        <li class="active" id="category"><strong>Category</strong></li>
+                        <li id="auteur"><strong>Auteur</strong></li>
+                        <li id="article"><strong>Article</strong></li>
+                        <li id="confirm"><strong>Finish</strong></li>
+                    </ul>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+
+
+
+                    <br> <!-- fieldsets -->
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">category Information:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 1 - 4</h2>
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.categorie, "categorie :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.categorie) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.revue, "revue :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.revue) }}
+                                </div>
+                            </div>
+
+{#                            <label class="fieldlabels">Email: *</label>                 <input type="email" name="email" placeholder="Email Id"/>#}
+{#                            <label class="fieldlabels">Username: *</label>              <input type="text" name="uname" placeholder="UserName"/>#}
+{#                            <label class="fieldlabels">Password: *</label>              <input type="password" name="pwd" placeholder="Password"/>#}
+{#                            <label class="fieldlabels">Confirm Password: *</label>      <input type="password" name="cpwd" placeholder="Confirm Password"/>#}
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next"/>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Personal Information:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 2 - 4</h2>
+                                </div>
+                            </div>
+                            <div class="form-group  required">
+                                {{ form_label(formArticle.title, "Title : ", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.title,{'attr':{'class':'form-control'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.abstract, "abstract :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.abstract) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.keyword, "keyword :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.keyword) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.content, "content :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.content) }}
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                {{ form_label(formArticle.size, "size :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                                <div class="col-sm-9">
+                                    {{ form_widget(formArticle.size) }}
+                                </div>
+                            </div>
+
+{#                            <label class="fieldlabels">First Name: *</label>            <input type="text" name="fname" placeholder="First Name"/>#}
+{#                            <label class="fieldlabels">Last Name: *</label>             <input type="text" name="lname" placeholder="Last Name"/>#}
+{#                            <label class="fieldlabels">Contact No.: *</label>           <input type="text" name="phno" placeholder="Contact No."/>#}
+{#                            <label class="fieldlabels">Alternate Contact No.: *</label> <input type="text" name="phno_2" placeholder="Alternate Contact No."/>#}
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Next"/>
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    </fieldset>
+
+
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Auteur Information:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 3 - 4</h2>
+                                </div>
+                            </div>
+
+                            <div class="form-group required">
+                                <div class="col-sm-9">
+                                    <fieldset class="border col-md-6">
+                                        <legend class="col-md-6"> Auteur</legend>
+                                        {{ form_row(formArticle.auteurs) }}
+                                        <a href="#" id="add_auteur" class="btn btn-primary">Ajouter un Auteur</a>
+                                    </fieldset>
+                                    <p style="margin-top: 10px;margin-right: 180px!important;float: right!important;">
+                                        <button type="submit" class="btn btn-primary float-right mr-2" id="articleStatus"> Enregistrer
+                                        </button>
+                                    </p>
+                                </div>
+                            </div>
+
+{#                            <label class="fieldlabels">Upload Your Photo:</label>               <input type="file" name="pic" accept="image/*">#}
+{#                            <label class="fieldlabels">Upload Signature Photo:</label>          <input type="file" name="pic" accept="image/*">#}
+                        </div>
+                        <input type="button" name="next" class="next action-button" value="Submit"/>
+                        <input type="button" name="previous" class="previous action-button-previous" value="Previous"/>
+                    </fieldset>
+
+
+                    <fieldset>
+                        <div class="form-card">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h2 class="fs-title">Finish:</h2>
+                                </div>
+                                <div class="col-5">
+                                    <h2 class="steps">Step 4 - 4</h2>
+                                </div>
+                            </div>
+                            <br><br>
+                            <h2 class="purple-text text-center"><strong>SUCCESS !</strong></h2> <br>
+                            <div class="row justify-content-center">
+                                <div class="col-3"><img src="https://i.imgur.com/GwStPmg.png" class="fit-image"></div>
+                            </div>
+                            <br><br>
+                            <div class="row justify-content-center">
+                                <div class="col-7 text-center">
+                                    <h5 class="purple-text text-center">You Have Successfully Signed Up</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                {{ form_end(formArticle) }}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+{#    Voici le script en question :#}
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#article_auteurs');
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $('#add_auteur').click(function(e) {
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                e.stopPropagation();
+                addCategory($container);
+                return false;
+            });
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                addCategory($container);
+            } else {
+                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // La fonction qui ajoute un formulaire GroupeAuteurType
+            function addCategory($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Auteur' + (index+1))
+                    .replace(/__name__/g,        index)
+                ;
+
+                // On crée un objet jquery qui contient ce template
+                var $prototype = $(template);
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'une catégorie
+            function addDeleteLink($prototype) {
+                // Création du lien
+                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
+{% endblock %}

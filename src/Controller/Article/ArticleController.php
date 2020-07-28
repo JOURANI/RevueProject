@@ -3,10 +3,7 @@
 namespace App\Controller\Article;
 
 use App\Entity\Article;
-use App\Entity\GroupeAuteur;
-use App\Entity\Users;
 use App\Form\ArticleType;
-use App\Form\GroupeAuteurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +49,35 @@ class ArticleController extends AbstractController
         }
 
         return $this->render('Article/addNew.html.twig',[
+            'formArticle' => $formArticle->createView(),
+            'article'=> $article
+        ]);
+    }
+
+    /**
+     * @Route("/add", name="article-add")
+     * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
+     */
+    public function add(Request $request,EntityManagerInterface $manager):Response
+    {
+        $article =new Article();
+        $formArticle = $this->createForm(ArticleType::class,$article);
+        $formArticle->handleRequest($request);
+
+        if($formArticle->isSubmitted() && $formArticle->isValid() )
+        {
+            foreach ($article->getAuteurs() as $auteur) {
+                $auteur->setUser($this->getUser());
+            }
+            $article->setUser($this->getUser());
+            $manager->persist($article);
+            $manager->flush();
+            return $this->redirectToRoute("groupAuteur-new");
+        }
+
+        return $this->render('Article/NewArticle.html.twig', [
             'formArticle' => $formArticle->createView(),
             'article'=> $article
         ]);

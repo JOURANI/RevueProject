@@ -3,7 +3,7 @@
 {% block title %}Enregistrer{% endblock %}
 
 {% block body %}
-{#    <style>#}
+    <style>
 {#        fieldset#}
 {#        {#}
 {#            border: 1px solid #ddd !important;#}
@@ -32,26 +32,35 @@
 {#            content:"*";#}
 {#            color:red;#}
 {#        }#}
-{#    </style>#}
+    </style>
+
     {{ form_start(formArticle, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="container">
-        <fieldset class="border col-md-6">
-            <legend class="col-md-3"> Article</legend>
+        <fieldset class=" col-md-6">
 
+            <div class="hideCategory">
 
-            <div class="form-group required">
-                {{ form_label(formArticle.categorie, "categorie :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
-                <div class="col-sm-9">
-                    {{ form_widget(formArticle.categorie) }}
+                <legend class="col-md-3"> Article</legend>
+                <div class="form-group required">
+                    {{ form_label(formArticle.categorie, "categorie :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(formArticle.categorie) }}
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group required">
-                {{ form_label(formArticle.revue, "revue :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
-                <div class="col-sm-9">
-                    {{ form_widget(formArticle.revue) }}
+                <div class="form-group required">
+                    {{ form_label(formArticle.revue, "revue :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                    <div class="col-sm-9">
+                        {{ form_widget(formArticle.revue) }}
+                    </div>
                 </div>
+
+{#                <a href="" class="btn btn-primary" id="showArticle">Suivant</a>#}
+
             </div>
+            {###################################################################################}
+
+            <div class="hideArticle">
 
             <div class="form-group  required">
                 {{ form_label(formArticle.title, "Title : ", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
@@ -87,21 +96,29 @@
                     {{ form_widget(formArticle.size) }}
                 </div>
             </div>
+{#                <a href="" class="btn btn-primary" id="showAuteur">Suivant</a>#}
+
+            </div>
         </fieldset>
 
-        <div class="form-group required">
+        {###################################################################################}
+
+        <div class="hideAuteur">
+            <div class="form-group required">
             <div class="col-sm-9">
                 <fieldset class="border col-md-6">
                     <legend class="col-md-3"> Auteur</legend>
                     {{ form_row(formArticle.auteurs) }}
                     <a href="#" id="add_auteur" class="btn btn-primary">Ajouter un Auteur</a>
                 </fieldset>
-                <p  style="margin-top: -50px;margin-right: 180px!important;float: right!important;">
-                    <button type="submit" class="btn btn-primary float-right mr-5" id="articleStatus"> Enregistrer</button>
+                <p style="margin-top: -50px;margin-right: 180px!important;float: right!important;">
+                    <button type="submit" class="btn btn-primary float-right mr-5" id="articleStatus"> Enregistrer
+                    </button>
                 </p>
             </div>
         </div>
 
+        </div>
     </div>
     {{ form_end(formArticle) }}
     <p style="margin-bottom: 200px"></p>
@@ -110,8 +127,7 @@
 
     {% block javascripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-        Voici le script en question :
+        {# Voici le script en question :#}
         <script type="text/javascript">
             $(document).ready(function() {
                 // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
@@ -178,6 +194,24 @@
                     });
                 }
             });
+
+              //*******************************************\\
+             //*************   Stepper Script   ************\\
+            //***********************************************\\
+
+                $(".hideArticle").addClass("hidden");
+                $(".hideAuteur").addClass("hidden");
+
+                // on click suivant button should hide Category and show Auteur
+            // try to use those 2  jquery functions [.removeClass() and .addClass("hidden")];
+
+                $("#showArticle").click(function(){
+                    // $(".hideArticle").show();
+                    // $(".hideCategory").removeClass("show");
+                });
+
+
+
         </script>
     {% endblock %}
 
