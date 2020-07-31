@@ -3,7 +3,14 @@
 namespace App\Controller\Article;
 
 use App\Entity\Article;
+use App\Entity\Categorie;
+use App\Entity\Revue;
+use App\Entity\GroupeAuteur;
 use App\Form\ArticleType;
+use App\Repository\ArticleRepository;
+use App\Repository\CategorieRepository;
+use App\Repository\GroupeAuteurRepository;
+use App\Repository\RevueRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,15 +22,82 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArticleController extends AbstractController
 {
+
     /**
-     * @Route("", name="article-index")
+     * @var EntityManagerInterface
+     */
+    private $manager;
+    /**
+     * @var ArticleRepository
+     */
+    private $repository;
+    /**
+     * @var CategorieRepository
+     */
+    private $categorieRepository;
+    /**
+     * @var RevueRepository
+     */
+    private $revueRepository;
+    /**
+     * @var GroupeAuteurRepository
+     */
+    private $groupAuteurRepository;
+    /**
+     * @var ArticleRepository
+     */
+    private $articleRepository;
+
+    public function __construct(EntityManagerInterface $manager,
+                                ArticleRepository $repository,
+                                CategorieRepository $categorieRepository,
+                                RevueRepository $revueRepository,
+                                GroupeAuteurRepository $groupAuteurRepository,
+                                ArticleRepository $articleRepository)
+    {
+        $this->manager = $manager;
+        $this->repository = $repository;
+        $this->categorieRepository = $categorieRepository;
+        $this->revueRepository = $revueRepository;
+        $this->groupAuteurRepository = $groupAuteurRepository;
+        $this->articleRepository = $articleRepository;
+    }
+
+    /**
+     * @Route("", name="article-index" , methods={"GET"} )
      */
     public function index()
     {
-        return $this->render('Article/index.html.twig', [
-            'controller_name' => 'ArticleController',
+        return $this->render("Article/index.html.twig", [
+            'articles'   => $this->repository->findAll(),
+            'categories' => $this->categorieRepository->findAll(),
+            'revues'     =>  $this->revueRepository->findAll()
         ]);
     }
+
+
+    /**
+     * @Route("/show/{id}", name="article.show")
+     * @param Article $article
+     */
+    public function showArticle(Article $article)
+    {
+
+        return $this->render("Article/show.html.twig",[
+                'articles'   => $this->repository->find($article),
+                'categories' => $this->categorieRepository->findAll(),
+                'revues'     => $this->revueRepository->findAll(),
+                'auteurs'    => $this->groupAuteurRepository->SelectArticleAuthors($article->getId())
+            ]
+        );
+    }
+
+
+
+
+
+
+
 
     /**
      * @Route("/create",name="article-new")
@@ -80,6 +154,26 @@ class ArticleController extends AbstractController
         return $this->render('Article/NewArticle.html.twig', [
             'formArticle' => $formArticle->createView(),
             'article'=> $article
+        ]);
+    }
+
+    /**
+     * @Route("/edit/{id}", name="article-edit")
+     * @param Article $article
+     * @param Request $request
+     */
+    public function editArticle(Article $article,Request $request)
+    {
+        $form=$this->createForm(ArticleType::class,$article);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->manager->flush();
+//            $this->addFlash('success','le bien et modifier avec succses');
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render("Article/edit.html.twig",[
+            'form' => $form->createView()
         ]);
     }
 

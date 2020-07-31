@@ -43,7 +43,7 @@ class ArticleType extends AbstractType
                 'label' => false
             ])
         ;
-
+//
 //        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
 //            $event->getData()->addAuteur(new GroupeAuteur());
 //        });

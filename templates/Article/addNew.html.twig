@@ -32,15 +32,21 @@
 {#            content:"*";#}
 {#            color:red;#}
 {#        }#}
+        .hidden{
+            display: none!important;
+        }
+        .show{
+            display: block!important;
+        }
     </style>
 
     {{ form_start(formArticle, {'attr': {'novalidate': 'novalidate'}}) }}
-    <div class="container">
-        <fieldset class=" col-md-6">
+    <div class="container d-flex justify-content-center m-5 pb-5">
+        <fieldset class=" col-md-10">
 
-            <div class="hideCategory">
+            <div class="A">
+                <legend class="col-md-5"> Category</legend>
 
-                <legend class="col-md-3"> Article</legend>
                 <div class="form-group required">
                     {{ form_label(formArticle.categorie, "categorie :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
                     <div class="col-sm-9">
@@ -55,12 +61,14 @@
                     </div>
                 </div>
 
-{#                <a href="" class="btn btn-primary" id="showArticle">Suivant</a>#}
+                <label for="" class="btn btn-primary" id="A">Suivant</label>
 
             </div>
-            {###################################################################################}
 
-            <div class="hideArticle">
+        {###################################################################################}
+
+            <div class="B hidden">
+                <legend class="col-md-5"> Article</legend>
 
             <div class="form-group  required">
                 {{ form_label(formArticle.title, "Title : ", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
@@ -96,32 +104,28 @@
                     {{ form_widget(formArticle.size) }}
                 </div>
             </div>
-{#                <a href="" class="btn btn-primary" id="showAuteur">Suivant</a>#}
-
+                <label for="" class="btn btn-primary" id="B">Suivant</label>
             </div>
         </fieldset>
 
         {###################################################################################}
 
-        <div class="hideAuteur">
-            <div class="form-group required">
-            <div class="col-sm-9">
-                <fieldset class="border col-md-6">
-                    <legend class="col-md-3"> Auteur</legend>
-                    {{ form_row(formArticle.auteurs) }}
-                    <a href="#" id="add_auteur" class="btn btn-primary">Ajouter un Auteur</a>
-                </fieldset>
-                <p style="margin-top: -50px;margin-right: 180px!important;float: right!important;">
-                    <button type="submit" class="btn btn-primary float-right mr-5" id="articleStatus"> Enregistrer
-                    </button>
-                </p>
+        <div class="C hidden">
+            <div class="form-group required" style="width: 500px;">
+                <div class="col-sm-9">
+{#                    <fieldset class="border col-md-12">#}
+                        <legend class="col-md-10"> Auteur</legend>
+                        {{ form_row(formArticle.auteurs) }}
+                        <a href="#" id="add_auteur" class="btn btn-outline-info">Ajouter un Auteur</a>
+{#                    </fieldset>#}
+                </div>
             </div>
-        </div>
-
+                <button type="submit" class="btn btn-primary" id="articleStatus" style="margin-left: 15px;margin-top: 62px;width: 350px;">
+                    Enregistrer
+                </button>
         </div>
     </div>
     {{ form_end(formArticle) }}
-    <p style="margin-bottom: 200px"></p>
 
 {% endblock %}
 
@@ -195,22 +199,19 @@
                 }
             });
 
-              //*******************************************\\
-             //*************   Stepper Script   ************\\
-            //***********************************************\\
+  //*******************************************\\
+ //*************   Stepper Script   ************\\
+//***********************************************\\
 
-                $(".hideArticle").addClass("hidden");
-                $(".hideAuteur").addClass("hidden");
+            $("#A").click(function(){
+                $(".B").removeClass("hidden").addClass("show");
+                $(".A").addClass("hidden");
+            });
 
-                // on click suivant button should hide Category and show Auteur
-            // try to use those 2  jquery functions [.removeClass() and .addClass("hidden")];
-
-                $("#showArticle").click(function(){
-                    // $(".hideArticle").show();
-                    // $(".hideCategory").removeClass("show");
-                });
-
-
+            $("#B").click(function(){
+                $(".B").removeClass("show").addClass("hidden");
+                $(".C").removeClass("hidden").addClass("show");
+            });
 
         </script>
     {% endblock %}
