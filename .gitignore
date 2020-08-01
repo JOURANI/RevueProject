@@ -4,6 +4,8 @@
 /.env.local.php
 /.env.*.local
 /.idea
+/var
+/vendor
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

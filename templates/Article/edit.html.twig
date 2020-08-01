@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .mt{
+            margin-top: 10px;
+        }
+    </style>
+    <div class="container mt jumbotron">
+        <div class="title">
+            <h1 class="badge-primary text-center mb-5">Editer L'article</h1>
+        </div>
+
+        {#********************************************************************************#}
+
+        {{ form_start(form) }}
+        {{ form_row(form.categorie,{'attr': {'Placeholder': 'categorie de l\'article'}}) }}
+        {{ form_row(form.revue,{'attr': {'Placeholder': 'revue de l\'article'}}) }}
+        {{ form_row(form.title,{'attr': {'Placeholder': 'titre de l\'article'}}) }}
+        {{ form_row(form.abstract,{'attr': {'Placeholder': 'abstract de l\'article'}}) }}
+        {{ form_row(form.keyword,{'attr': {'Placeholder': 'keyword de l\'article'}}) }}
+        {{ form_row(form.size,{'attr': {'Placeholder': 'size de l\'article'}}) }}
+        {{ form_row(form.content,{'attr': {'Placeholder': 'content de l\'article'}}) }}
+        <h3>les Auteurs de  cet article</h3><br>
+        <div class="row">
+
+
+                {% for child in form.auteurs %}
+                    <div class="col-md-3">
+                        {{ (form_widget(child)) }}
+                    </div>
+                {% endfor %}
+
+{#                {{ form_rest(form) }}#}
+{#                {{ dump(form.auteurs) }}#}
+{#                {{ form_row(form.auteurs,{'attr': {'Placeholder': 'content de l\'article'}}) }}#}
+
+
+
+
+            <div class="form-group required" style="width: 500px;">
+                <div class="col-sm-9">
+                    <legend class="col-md-10"> Auteur</legend>
+                    {{ form_row(form.auteurs) }}
+                    <a href="#" id="add_auteur" class="btn btn-outline-info">Ajouter un Auteur</a>
+                </div>
+            </div>
+
+
+        </div>
+        <button type="submit" class="btn btn-primary"> Edit</button>
+        {{ form_end(form) }}
+
+        {#********************************************************************************#}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <style>
+        .mt{
+            margin-top: 150px;
+        }
+        .row{
+            /*height: 60px;*/
+            margin:20px;
+        }
+    </style>
+    {#    <div class="container mt">#}
+    {#        <div class="title">#}
+    {#            <h1 class="badge-primary text-center mb-5">Editer L'article</h1>#}
+    {#        </div>#}
+
+    {#        <div class="row">#}
+    {#            <div class="col-10">#}
+    {#                <div class="row">#}
+    {#                    <div class="col-md-3"><label for="titre">Le Titre</label></div>#}
+    {#                    <div class="col-md-6">{{ (article.title) }}</div>#}
+    {#                </div>#}
+    {#                <div class="row">#}
+    {#                    <div class="col-md-3"><label for="size">La Taille</label></div>#}
+    {#                    <div class="col-md-6">{{ (article.size) }}</div>#}
+    {#                </div>#}
+    {#                <div class="row">#}
+    {#                    <div class="col-md-3"><label for="resume">La Résumer</label></div>#}
+    {#                    <div class="col-md-6">{{ (article.Resume) }}</div>#}
+    {#                </div>#}
+
+    {#                <div class="row">#}
+    {#                    <div class="col-md-3"><label for="content">Le Contenue</label></div>#}
+    {#                    <div class="col-md-6">{{ (article.Content) }}</div>#}
+
+    {#                </div>#}
+    {#                <div class="row">#}
+    {#                    <div class="col-md-3"><label for="date">La date de publication de l'article</label></div>#}
+    {#                    <div class="col-md-6">{{ (article.CreatedAt|date) }}</div>#}
+    {#                </div>#}
+
+
+    {#                <button type="submit" class="btn btn-primary"> Edit</button>#}
+    {#            </div>#}
+    {#        </div>#}
+
+    {#        #}
+    {#    </div>#}
+
+
+    {###########################################################################}
+    {########################      Perfect Block      ##########################}
+    {###########################################################################}
+
+    <div class="container mt jumbotron">
+        <div class="title">
+            <h1 class="text-center mb-5 text-muted font-weight-bold">L'article</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4  mf-6"><label for="titre">Le Titre</label></div>
+            <div class="col-lg-8">{{ (articles.title) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"><label for="keyword">keyword</label></div>
+            <div class="col-lg-8">{{ (articles.keyword) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"><label for="abstract">L'abstract</label></div>
+            <div class="col-lg-8">{{ (articles.abstract) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"><label for="content">Le Contenue</label></div>
+            <div class="col-lg-8">{{ (articles.Content) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"><label for="size">La size</label></div>
+            <div class="col-lg-8">{{ (articles.size) }}</div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4"><label for="revue">Le revue</label></div>
+                <div class="col-lg-8">
+                    {% for revue in revues %}
+                        {% if (revue.id) is same as (articles.revue.id) %}
+                            {{ revue.nomRevue }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4"><label for="categorie">La categorie</label></div>
+                <div class="col-lg-8">
+                    {% for category in categories %}
+                        {% if (category.id) is same as (articles.categorie.id) %}
+                            {{ category.nomCategorie }}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <td>
+                    <div class="title">
+                        <h1 class="text-center mb-5 text-muted font-weight-bold">les Auteurs de cet article</h1>
+                    </div>
+                    {# TODO AFFICHER LA LISTE DES AUTEUR LIER A CETTE ARTICLE#}
+                    <div class="row border border-dark  full-width text-light bg-dark m-0">
+                        <div class="col-md-3">
+                            nomAuteur
+                        </div>
+                        <div class="col-md-3">
+                          prenomAuteur
+                        </div>
+                        <div class="col-md-3">
+                            NomIns
+                        </div>
+                        <div class="col-md-3">
+                            adresseIns
+                        </div>
+                        </div>
+                    {% for auteur in auteurs %}
+                        <div class="row border-warning  border-bottom border-left  full-width m-0 {#mt-0#} ">
+                        <div class="col-md-3 border-warning  border-right">
+                            {{ (auteur.nomAuteur) }}
+                        </div>
+                        <div class="col-md-3 border-warning  border-right">
+                            {{ (auteur.prenomAuteur) }}
+                        </div>
+                        <div class="col-md-3 border-warning  border-right">
+                            {{ (auteur.NomIns) }}
+                        </div>
+                        <div class="col-md-3 border-warning  border-right">
+                            {{ (auteur.adresseIns) }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </td>
+            </div>
+        </div>
+
+
+        <div class="row">
+            {# todo Create Extention twig repeat to duplicate &nbsp  https://symfony.com/doc/4.4/templating/twig_extension.html #}
+            <a href="{{ path('article-edit',{id:articles.id}) }}"  class="btn btn-primary mr-4">&nbsp&nbsp Edit &nbsp&nbsp</a>
+{#            <a href="{{ path('article-delete',{'id':article.id}) }}"  class="btn btn-danger">Delete</a>#}
+        </div>
+    </div>
+
+    {###########################################################################}
+
+
+
+{% endblock %}

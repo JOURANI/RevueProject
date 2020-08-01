@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -90,6 +92,38 @@ class Users implements UserInterface, \Serializable
      * @ORM\ManyToOne(targetEntity="App\Entity\Institution", inversedBy="user")
      */
     private $institution;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="User", orphanRemoval=true)
+     */
+    private $articles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\GroupeAuteur", mappedBy="user")
+     */
+    private $groupeAuteur;
+
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupeAuteur()
+    {
+        return $this->groupeAuteur;
+    }
+
+    /**
+     * @param mixed $groupeAuteur
+     */
+    public function setGroupeAuteur($groupeAuteur): void
+    {
+        $this->groupeAuteur = $groupeAuteur;
+    }
 
     /**
      * @return Institution
@@ -212,9 +246,9 @@ class Users implements UserInterface, \Serializable
     {
         $roles = $this->roles;
         // give everyone ROLE_USER!
-        if (!in_array('ROLE_CHERCHEUR', $roles)) {
-            $roles[] = 'ROLE_CHERCHEUR';
-        }
+//        if (!in_array('ROLE_CHERCHEUR', $roles)) {
+//            $roles[] = 'ROLE_CHERCHEUR';
+//        }
         return $roles;
     }
 
@@ -270,5 +304,36 @@ class Users implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Article $article): self
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Article $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getUser() === $this) {
+                $article->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

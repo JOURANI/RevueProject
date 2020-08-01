@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    <style>
+        .m{
+            margin-top: 64px;
+            margin-bottom: 200px;
+        }
+        .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+            background-color: #152f4f;
+            color: lightskyblue;
+        }
+        .table table-striped{
+            border-radius: 10px!important;
+        }
+        .tooltip-inner {
+            width:400px;
+            max-width: 400px;
+            background-color: #152f4f;
+            color: #fff;
+            text-align: justify;
+            border-radius: 10px;
+            padding: 10px;
+            opacity: 1;
+        }
+    </style>
+
+    {###########################################################################}
+    {########################      Perfect Block      ##########################}
+    {###########################################################################}
+    <div class="container-fluid m">
+        <div class="title">
+            <h1>Liste des Article </h1>
+        </div>
+        <table class="table table-striped table-hover" style="border-radius:10px!important;">
+            <thead>
+            <tr class="text-light" style="background-color: #152f4f;">
+                <th><label for="titre">Le Titre</label></th>
+                <th><label for="size">La Abstract</label></th>
+                <th><label for="resume">La Keyword</label></th>
+                <th class="text-center"><label for="content">Le Contenue</label></th>
+                <th><label for="content">Auteur</label></th>
+                <th><label for="Category">Category</label></th>
+                <th><label for="Revue">Revue</label></th>
+                <th><label for="Actions">Actions</label></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td > {{ article.abstract }}</td>
+                    <td>{{ (article.keyword) }}</td>
+                    <td>{{ (article.content)}}</td>
+                    <td>
+                        {{ (article.user.username) }}
+                    </td>
+                    <td>
+                        {% for category in categories  %}
+                            {% if (category.id) is same as (article.categorie.id) %}
+                                {{ category.nomCategorie }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for revue in revues %}
+                            {% if (revue.id) is same as (article.revue.id) %}
+                                {{ revue.nomRevue }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-2 ml-0">
+                                <a href="" class="btn btn-outline-primary">&nbspEdit&nbsp&nbsp </a>
+                            </div>
+                            <div class="col-md-2 ml-2">
+                                <a href="" class="btn btn-outline-danger">Delete</a>
+                            </div>
+                            <div class="col-md-2 ml-2">
+                                <a href="{{ path("article.show",{id:article.id}) }}" class="btn btn-outline-success">Show</a>
+                            </div>
+                        </div>
+
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {###########################################################################}
+    {###########################################################################}
+{% endblock %}
+
+{% block javascripts %}
+{#    <script>#}
+{#        // Reference :   https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_tooltip&stacked=h#}
+{#        // Reference : https://stackoverflow.com/questions/17147821/how-to-make-a-whole-row-in-a-table-clickable-as-a-link#}
+{#        $(document).ready(function(){#}
+{#            $('[data-toggle="tooltip"]').tooltip();#}
+{#            $('*[data-href]').on('click', function() {#}
+{#                window.location = $(this).data("href");#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+{% endblock %}

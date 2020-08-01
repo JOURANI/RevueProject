@@ -37,6 +37,7 @@ class Institution
      */
     private $user;
 
+
     /**
      * @return mixed
      */
