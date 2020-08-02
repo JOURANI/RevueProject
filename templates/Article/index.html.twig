@@ -74,10 +74,13 @@
                     <td>
                         <div class="row">
                             <div class="col-md-2 ml-0">
-                                <a href="" class="btn btn-outline-primary">&nbspEdit&nbsp&nbsp </a>
+{#                                <a href="" class="btn btn-outline-primary">&nbspEdit&nbsp&nbsp </a>#}
+                                <a href="{{ path('article-edit',{id:article.id}) }}"  class="btn btn-outline-primary">&nbsp&nbspEdit&nbsp&nbsp</a>
                             </div>
                             <div class="col-md-2 ml-2">
-                                <a href="" class="btn btn-outline-danger">Delete</a>
+{#                                <a href="" class="btn btn-outline-danger">Delete</a>#}
+                                <a href="{{ path('article-delete',{'id':article.id}) }}" class="btn btn-outline-danger" onclick="return confirm('are u sure?')">Delete</a>
+
                             </div>
                             <div class="col-md-2 ml-2">
                                 <a href="{{ path("article.show",{id:article.id}) }}" class="btn btn-outline-success">Show</a>

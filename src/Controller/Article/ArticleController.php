@@ -119,7 +119,7 @@ class ArticleController extends AbstractController
             $article->setUser($this->getUser());
             $manager->persist($article);
             $manager->flush();
-            return $this->redirectToRoute("groupAuteur-new");
+            return $this->redirectToRoute("article-index");
         }
 
         return $this->render('Article/addNew.html.twig',[
@@ -175,6 +175,18 @@ class ArticleController extends AbstractController
         return $this->render("Article/edit.html.twig",[
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/delete/{id}",name="article-delete")
+     * @param Article $article
+     * @param Request $request
+     */
+    public function deleteArticle(Article $article,Request $request)
+    {
+        $this->manager->remove($article);
+        $this->manager->flush();
+        return $this->redirectToRoute('article-index');
     }
 
 }

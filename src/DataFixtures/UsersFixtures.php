@@ -3,7 +3,9 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Article;
 use App\Entity\Categorie;
+use App\Entity\GroupeAuteur;
 use App\Entity\Institution;
 use App\Entity\Revue;
 use App\Entity\Users;
@@ -26,6 +28,11 @@ class UsersFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+
+        //#############################################
+        //###########  Institution Records  ###########
+        //#############################################
+
         $institution = new Institution();
         $institution->setNomIns('NSA');
         $institution->setAdressIns('NSA Adresse');
@@ -43,9 +50,10 @@ class UsersFixtures extends Fixture
         $institution2->setAdressIns('INPT Adresse');
         $institution2->setVilleIns('RABAT');
         $manager->persist($institution2);
-
-
-        //***************************************
+        
+        //#############################################
+        //###############  User Records  ##############
+        //#############################################
 
         $admin = new Users();
         $admin->setNom("admin");
@@ -61,8 +69,6 @@ class UsersFixtures extends Fixture
         $admin->setInstitution($institution->setNomIns("NSA"));
         $manager->persist($admin);
 
-        //**************************************
-
         $user = new Users();
         $user ->setNom("user");
         $user->setPrenom("user");
@@ -77,7 +83,9 @@ class UsersFixtures extends Fixture
         $user->setInstitution($institution->setNomIns("ENCG"));
         $manager->persist($user);
 
-        //**************************************
+        //#############################################
+        //#############  Reviwer Records  #############
+        //#############################################
 
         $reviwer = new Users();
         $reviwer ->setNom("reviewer");
@@ -93,7 +101,9 @@ class UsersFixtures extends Fixture
         $reviwer->setInstitution($institution->setNomIns("INPT"));
         $manager->persist($reviwer);
 
-        //**************************************
+        //#############################################
+        //############  Category Records  #############
+        //#############################################
 
         $category= new Categorie();
         $category->setNomCategorie("Physique");
@@ -115,7 +125,9 @@ class UsersFixtures extends Fixture
         $category4->setNomCategorie("Sociologie");
         $manager->persist($category4);
 
-        //**************************************
+        //#############################################
+        //#############  Revue Records  ###############
+        //#############################################
 
         $revue = new Revue();
         $revue->setNomRevue("scopus");
@@ -131,6 +143,70 @@ class UsersFixtures extends Fixture
         $revue2->setNomRevue("PubChem");
         $revue2->setTypeRevue("PubChem");
         $manager->persist($revue2);
+
+        //#############################################
+        //#############  Auteur Records  ##############
+        //#############################################
+
+        $auteur = new GroupeAuteur();
+        $auteur->setPrenomAuteur("fabian");
+        $auteur->setNomAuteur("fabian");
+        $auteur->setAdresseIns("paris");
+        $auteur->setNomIns("university la salle");
+        $manager->persist($auteur);
+
+        $auteur1 = new GroupeAuteur();
+        $auteur1->setPrenomAuteur("tom");
+        $auteur1->setNomAuteur("tom");
+        $auteur1->setAdresseIns("london");
+        $auteur1->setNomIns("london institution");
+        $manager->persist($auteur1);
+
+        $auteur2 = new GroupeAuteur();
+        $auteur2->setPrenomAuteur("younes");
+        $auteur2->setNomAuteur("younes");
+        $auteur2->setAdresseIns("paris");
+        $auteur2->setNomIns("college la salle");
+        $manager->persist($auteur2);
+
+        $auteurs =[$auteur,$auteur1,$auteur2];
+
+        //#############################################
+        //#############  Article Records  #############
+        //#############################################
+
+        $article =new Article();
+        $article->setTitle("svt la genetique");
+        $article->setAbstract("svt la genetique");
+        $article->setKeyword("svt la genetique");
+        $article->setSize("230");
+        $article->setContent("svt la genetique svt la genetique");
+        $article->setCategorie($category3->setNomCategorie("SVT"));
+        $article->setRevue($revue1->setTypeRevue("Cedefop"));
+        $article->setUser($admin->setNom("admin"));
+        $item=null;
+        foreach($auteurs  as $item){
+            $article->addAuteur($item);
+        }
+
+        $manager->persist($article);
+
+
+        $article1 =new Article();
+        $article1->setTitle("Chimie nucléaire");
+        $article1->setAbstract("Chimie nucléaire");
+        $article1->setKeyword("Chimie nucléaire");
+        $article1->setSize("333");
+        $article1->setContent("Chimie nucléaire Chimie nucléaire");
+        $article1->setCategorie($category3->setNomCategorie("Chimie"));
+        $article1->setRevue($revue1->setTypeRevue("Cedefop"));
+        $article1->setUser($admin->setNom("admin"));
+        $item=null;
+        foreach($auteurs  as $item){
+            $article1->addAuteur($item);
+        }
+
+        $manager->persist($article1);
 
         $manager->flush();
     }
