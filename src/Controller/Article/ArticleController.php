@@ -75,7 +75,6 @@ class ArticleController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/show/{id}", name="article.show")
      * @param Article $article
@@ -92,13 +91,6 @@ class ArticleController extends AbstractController
         );
     }
 
-
-
-
-
-
-
-
     /**
      * @Route("/create",name="article-new")
      * @param Request $request
@@ -113,6 +105,13 @@ class ArticleController extends AbstractController
 
         if($formArticle->isSubmitted() && $formArticle->isValid() )
         {
+            $docFileName = $formArticle->get('file')->getData();
+            if ($docFileName) {
+                $originalFilename = pathinfo($docFileName->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = 'article' . '-' .$originalFilename . '-' . uniqid() . '.' . $docFileName->guessExtension();
+                $docFileName->move($this->getParameter('upload_directory'), $newFilename);
+                $article->setFile($newFilename);
+            }
             foreach ($article->getAuteurs() as $auteur) {
                 $auteur->setUser($this->getUser());
             }
@@ -128,48 +127,62 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/add", name="article-add")
-     * @param Request $request
-     * @param EntityManagerInterface $manager
-     * @return Response
-     */
-    public function add(Request $request,EntityManagerInterface $manager):Response
-    {
-        $article =new Article();
-        $formArticle = $this->createForm(ArticleType::class,$article);
-        $formArticle->handleRequest($request);
-
-        if($formArticle->isSubmitted() && $formArticle->isValid() )
-        {
-            foreach ($article->getAuteurs() as $auteur) {
-                $auteur->setUser($this->getUser());
-            }
-            $article->setUser($this->getUser());
-            $manager->persist($article);
-            $manager->flush();
-            return $this->redirectToRoute("groupAuteur-new");
-        }
-
-        return $this->render('Article/NewArticle.html.twig', [
-            'formArticle' => $formArticle->createView(),
-            'article'=> $article
-        ]);
-    }
+//    /**
+//     * @Route("/add", name="article-add")
+//     * @param Request $request
+//     * @param EntityManagerInterface $manager
+//     * @return Response
+//     */
+//    public function add(Request $request,EntityManagerInterface $manager):Response
+//    {
+//        $article =new Article();
+//        $formArticle = $this->createForm(ArticleType::class,$article);
+//        $formArticle->handleRequest($request);
+//
+//        if($formArticle->isSubmitted() && $formArticle->isValid() )
+//        {
+//            foreach ($article->getAuteurs() as $auteur) {
+//                $auteur->setUser($this->getUser());
+//            }
+//            $article->setUser($this->getUser());
+//            $manager->persist($article);
+//            $manager->flush();
+//            return $this->redirectToRoute("groupAuteur-new");
+//        }
+//
+//        return $this->render('Article/NewArticle.html.twig', [
+//            'formArticle' => $formArticle->createView(),
+//            'article'=> $article
+//        ]);
+//    }
 
     /**
      * @Route("/edit/{id}", name="article-edit")
      * @param Article $article
      * @param Request $request
+     * @param EntityManagerInterface $manager
+     * @return Response
      */
-    public function editArticle(Article $article,Request $request)
+    public function editArticle(Article $article,Request $request,EntityManagerInterface $manager):Response
     {
+        $FileNamePath = $this->getParameter("upload_directory").'/'.$article->getFile();
+
         $form=$this->createForm(ArticleType::class,$article);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            if(is_file($FileNamePath) && file_exists($FileNamePath)){
+                unlink($FileNamePath);
+            }
+            $docFileNameEdit = $form->get('file')->getData();
+
+            $originalFilenameEdit = pathinfo($docFileNameEdit->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilenameEdit.'-'.uniqid().'.'.$docFileNameEdit->guessExtension();
+            $docFileNameEdit->move($this->getParameter('upload_directory'), $newFilename);
+            $article->setFile($newFilename);
+
             $this->manager->flush();
-//            $this->addFlash('success','le bien et modifier avec succses');
-            return $this->redirectToRoute('home');
+//            $this->addFlash('success','le bien et modifier avec success');
+            return $this->redirectToRoute('article-index');
         }
 
         return $this->render("Article/edit.html.twig",[
@@ -180,10 +193,14 @@ class ArticleController extends AbstractController
     /**
      * @Route("/delete/{id}",name="article-delete")
      * @param Article $article
-     * @param Request $request
+     * @return Response
      */
-    public function deleteArticle(Article $article,Request $request)
+    public function deleteArticle(Article $article):Response
     {
+        $path=$this->getParameter("upload_directory").'/'.$article->getFile();
+        if(is_file($path) && file_exists($path)){
+            unlink($path);
+        }
         $this->manager->remove($article);
         $this->manager->flush();
         return $this->redirectToRoute('article-index');

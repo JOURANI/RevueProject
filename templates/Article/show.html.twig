@@ -163,6 +163,16 @@
         </div>
 
         <div class="row">
+            <div class="col-lg-4"><label for="document">Le Document</label></div>
+            <div class="col-lg-8">
+                <a href="{{ asset('uploads/'~ articles.file) }}">
+                    {# <i class="material-icons">&#xE415;</i>#}  {# use material-icons #}
+                    <i class="fa fa-file-pdf-o" style="font-size:38px;color:red"></i>  {# use font-awesome icons #}
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-lg-4"><label for="revue">Le revue</label></div>
                 <div class="col-lg-8">
                     {% for revue in revues %}

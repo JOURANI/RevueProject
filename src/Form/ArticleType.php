@@ -8,12 +8,14 @@ use App\Entity\Revue;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class ArticleType extends AbstractType
 {
@@ -41,6 +43,24 @@ class ArticleType extends AbstractType
                 'entry_options' => [ 'label' => false],
                 'by_reference' => false,
                 'label' => false
+            ])
+
+            ->add('file',filetype::class,[
+                'label' => 'Document (PDF file)',
+                'required' => false, // to allow Entity constraints we turn required false
+                'data_class' => null,
+                //'id' => 'customFile', // we could define the element id like this method
+                'attr' =>
+                    [
+                        'placeholder' => 'Choose a file',
+//                       'class' => 'custom-file-input' // we could define the element class like this method
+                    ],
+                'constraints' => [
+                    new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => ['application/pdf', 'application/x-pdf'],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document']
+                    )]
             ])
         ;
 //

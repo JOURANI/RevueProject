@@ -21,6 +21,16 @@
         {{ form_row(form.keyword,{'attr': {'Placeholder': 'keyword de l\'article'}}) }}
         {{ form_row(form.size,{'attr': {'Placeholder': 'size de l\'article'}}) }}
         {{ form_row(form.content,{'attr': {'Placeholder': 'content de l\'article'}}) }}
+        <label for="fileName" class="mr-1 mt-1 mb-1">File Name Wishing to Update </label>
+
+        <div class="row">
+            <div class="col-md-4">
+                <input value="{{ form.file.vars.data }}" class="pl-3 p-1 border border-light" style="width: 350px!important; margin-top: 2px;" disabled />
+            </div>
+            <div class="col-md-8">{{ form_widget(form.file) }}</div>
+        </div>
+
+
         <h3>les Auteurs de  cet article</h3><br>
         <div class="row">
 
@@ -55,4 +65,18 @@
 
     </div>
 
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    {# Solution :  https://stackoverflow.com/a/16213273/10212386  #}
+    <script>
+        $(document).ready(function(){
+            $("input").change(function (e) {
+                var $this = $(this);
+                // ($this.next().html($this.val().split('\\').pop()));    // To display Only the File Name Uploaded
+                ($this.next().html($this.val()));                         // To display the Full path of the File Uploaded
+                $(".custom-file-label").css("background-color", "#32CD32");
+            });
+        });
+    </script>
 {% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        td {
+            width: 400px!important;
+            text-align: center;
+            vertical-align: center;
+        }
+
+        .DisplayList{
+            margin: auto;
+            width: 1500px!important;
+            /*border: 3px solid green;*/
+            padding: 10px;
+        }
+
+        .material-icons{
+            font-size: xx-large!important;
+            color: red;
+            /*background-color: red;*/
+        }
+        .alert{
+            text-align: center;
+        }
+    </style>
+    <div class="DisplayList">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+{#        <h1 class="text-center m-5"> Documents List</h1>#}
+        <h3 class="p-2 mr-5 mt-5 mb-5 badge-primary rounded-circle text-center font-weight-bold">Documents List</h3>
+
+        <table border="1px solid" class="text-center table  table-striped">
+            <tr class="thead-dark">
+                <th>Number</th>
+                <th>File Name</th>
+                <th>File</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            {% for document in documentList %}
+                <tr>
+{#                    <td>{{ document.id }}</td>#}
+                    <td>{{ loop.index }}</td>
+                    <td>{{ document.docName }}</td>
+                    <td>
+                        <a href="{{ asset('uploads/'~ document.docName) }}">
+{#                            <i class="material-icons">&#xE415;</i>#}  {# use material-icons #}
+                            <i class="fa fa-file-pdf-o" style="font-size:38px;color:red"></i>  {# use font-awesome icons #}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ asset('uploads/'~ document.docName) }}" class="m-4">
+                            <i class="fa fa-eye" style="font-size:38px;color:#23bf5d;"></i>
+                        </a>
+
+                        <a href="{{ path('edit-document',{id : document.id}) }}" class="m-4">
+                            <i class="fa fa-edit" style="font-size:38px;color:#218BC3"></i>
+                        </a>
+                        <a href="{{ path('delete-document',{id : document.id}) }}" class="m-4">
+                            <i class="fa fa-trash-o" style="font-size:38px;color:red"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor%}
+        </table>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    {# Solution : https://forum.phalcon.io/discussion/14815/how-to-set-timeout-for-flash-messages-in-flashsession #}
+    <script>
+        $(document).ready(function(){
+            setTimeout(function(){
+                $("div.alert").remove();
+            }, 3000 ); // 3 secs
+        });
+    </script>
+{% endblock %}
+
+
+
+

@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -68,6 +69,14 @@ class Article
      * @var $data
      */
     private $auteurs;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * //Add @ to allow the constraint Assert : @ Assert
+     * //Assert\NotBlank(message="An empty file is not allowed !!!")
+
+     */
+    private $file;
 
     public function __construct()
     {
@@ -205,6 +214,18 @@ class Article
         if ($this->auteurs->contains($auteur)) {
             $this->auteurs->removeElement($auteur);
         }
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(?string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

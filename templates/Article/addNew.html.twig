@@ -90,6 +90,14 @@
                     {{ form_widget(formArticle.keyword) }}
                 </div>
             </div>
+            {#####################################################################}
+{#            <div class="form-group required">#}
+{#                {{ form_label(formArticle.file, "Document :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}#}
+{#                <div class="col-sm-9">#}
+{#                    {{ form_widget(formArticle.file,{'attr':{'class':'uploadFile'}}) }}#}
+{#                </div>#}
+{#            </div>#}
+            {#####################################################################}
 
             <div class="form-group required">
                 {{ form_label(formArticle.content, "content :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
@@ -104,6 +112,15 @@
                     {{ form_widget(formArticle.size) }}
                 </div>
             </div>
+
+            <div class="form-group required">
+                {{ form_label(formArticle.file, "file :", {'label_attr': {'class': 'col-sm-6 control-label requis'}}) }}
+                <div class="col-sm-9">
+                    {{ form_widget(formArticle.file) }}
+                </div>
+            </div>
+
+
                 <label for="" class="btn btn-primary" id="B">Suivant</label>
             </div>
         </fieldset>
@@ -213,6 +230,17 @@
                 $(".C").removeClass("hidden").addClass("show");
             });
 
+//********************************************\\
+//*************   FileType Style   ************\\
+//**********************************************\\
+
+            $(document).ready(function(){
+                $("input.custom-file-input").change(function (e) {
+                     var $this = $(this);
+                    $this.next().html($this.val().split('\\').pop());    // To display Only the File Name Uploaded
+                    // ($this.next().html($this.val()));                         // To display the Full path of the File Uploaded
+                    $(".custom-file-label").css("background-color", "#32CD32");
+                });
+            });
         </script>
     {% endblock %}
-

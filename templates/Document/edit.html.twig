@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h3 class="p-2 mr-5 mt-5 mb-5 badge-primary rounded-circle text-center font-weight-bold">Update Document</h3>
+
+        {{ form_start(form) }}
+
+        <label for="fileName" class="mr-5 mt-5 mb-5">File Name Wishing to Update </label>
+        <input value="{{ form.docName.vars.data }}" class=" pl-3 " style="width: 500px!important;" disabled />
+        {{ form_row(form.docName,{'attr':{'class':'uploadFile'}}) }}
+
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    {# Solution :  https://stackoverflow.com/a/16213273/10212386  #}
+    <script>
+        $(document).ready(function(){
+            $("input").change(function (e) {
+                var $this = $(this);
+                // ($this.next().html($this.val().split('\\').pop()));    // To display Only the File Name Uploaded
+                ($this.next().html($this.val()));                         // To display the Full path of the File Uploaded
+                $(".custom-file-label").css("background-color", "#32CD32");
+            });
+        });
+    </script>
+{% endblock %}
+
